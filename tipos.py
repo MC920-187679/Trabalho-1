@@ -2,17 +2,23 @@
 Procolos para tipagem estática com ``mypy``.
 """
 from __future__ import annotations
-from numpy import ndarray, uint8, dtype
+from numpy import ndarray, uint8, int64, float64
 from typing import Protocol, Type, Union, Literal, Optional, overload, Tuple
+
+
+class Kernel(ndarray): # type: ignore
+    dtype: Union[Type[int64], Type[float64]]
+    ndim: Literal[2] = 2
+    shape: Tuple[int, int]
 
 
 class Image(ndarray): # type: ignore
     """
-    Matriz que representam imagens em OpenCV e biblioteca similares.
+    Matriz que representam imagens em OpenCV e bibliotecas similares.
     """
     dtype: Type[uint8] = uint8
-    ndim: Literal[3] = 3
-    shape: Tuple[int, int, Literal[3]]
+    ndim: Literal[2] = 2
+    shape: Tuple[int, int]
 
     def copy(self) -> Image:
         ...
