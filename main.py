@@ -75,13 +75,13 @@ def borda(nome: str) -> Borda:
 
 # parser de argumentos
 description = 'Ferramenta simples de aplicação dos filtros de convolução do Trabalho 1.'
-usage = '%(prog)s [OPTIONS] INPUT KERNEL [KERNEL ...]'
+usage = '%(prog)s [OPTIONS] INPUT [KERNEL ...]'
 
 parser = ArgumentParser(description=description, usage=usage, allow_abbrev=False)
 # argumentos necessários
 parser.add_argument('input', metavar='INPUT', type=str,
                     help='imagem de entrada')
-parser.add_argument('kernels', type=kernel, metavar='KERNEL', nargs='+',
+parser.add_argument('kernels', type=kernel, metavar='KERNEL', nargs='*',
                     help='filtros a serem aplicados na imagem')
 # opções de saída
 parser.add_argument('-o', '--output', type=str, action='append', metavar='FILE',
@@ -112,8 +112,12 @@ if __name__ == "__main__":
     arquivo = args.input
     img = imgread(arquivo)
 
-    # convoluções
-    img = convolucao(img, args)
+    # convoluções, se tiver alguma
+    if len(args.kernels) > 0:
+        img = convolucao(img, args)
+    else:
+        msg = 'Nenhum kernel recebido, mostrando apenas a imagem original.'
+        print('CUIDADO:', msg, file=sys.stderr)
 
     # saída
     if args.output:
