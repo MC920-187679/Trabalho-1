@@ -8,7 +8,17 @@ import cv2
 
 def imgread(arquivo: str) -> Image:
     """
-    Lê um arquivo de imagem.
+    Lê um arquivo de imagem em escala de cinza.
+
+    Parâmetros
+    ----------
+    arquivo: str
+        Caminho para o arquivo de imagem a ser lido.
+
+    Retorno
+    -------
+    img: np.ndarray
+        Matriz representando a imagem lida.
     """
     # abre o arquivo fora do OpenCV, para que o
     # Python trate os erros de IO
@@ -27,6 +37,20 @@ def imgread(arquivo: str) -> Image:
 def imgwrite(img: Image, arquivo: str) -> None:
     """
     Escreve uma matriz como imagem PNG em um arquivo.
+
+    Parâmetros
+    ----------
+    img: np.ndarray
+        Matriz representando uma imagem.
+    arquivo: str
+        Caminho para o arquivo onde a imagem será gravada.
+
+    Erro
+    ----
+    ValueError
+        Quando a imagem não pode ser salva no arquivo ou quando
+        a entrada não representa uma imagem ou não pode ser
+        convertido para a extensão eserada.
     """
     # indica para o caller quando a imagem NÃO for salva
     if not cv2.imwrite(arquivo, img):
@@ -36,7 +60,14 @@ def imgwrite(img: Image, arquivo: str) -> None:
 
 def imgshow(img: Image, nome: str="") -> None:
     """
-    Apresenta a imagem em uma janela com um nome
+    Apresenta a imagem em uma janela com um nome.
+
+    Parâmetros
+    ----------
+    img: np.ndarray
+        Matriz representando uma imagem.
+    nome: str
+        Nome da janela a ser aberta. Opcional.
     """
     try:
         cv2.imshow(nome, img)

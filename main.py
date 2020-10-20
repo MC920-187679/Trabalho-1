@@ -16,6 +16,18 @@ from lib import (
 def convolucao(img: Image, args: Argumentos) -> Image:
     """
     Aplicação e combinação das convoluções.
+
+    Parâmetros
+    ----------
+    img: np.ndarray
+        Matriz representando a imagem lida.
+    args: Argumentos-like object
+        Objeto com os argumentos da linha de comando.
+
+    Retorno
+    -------
+    img: np.ndarray
+        Imagem processada.
     """
 
     # aplica um kernel e retorna a matriz com
@@ -80,8 +92,8 @@ parser.add_argument('-f', '--force-show', action='store_true',
 parser.add_argument('-a', action='store_true',
                     help='aplica a transformação dos níveis antes de combinar as imagens')
 parser.add_argument('-b', '--borda',
-                    type=borda, choices=Borda, default=Borda.reflexao,
-                    help='muda o tratamento de borda para a opção dada (PADRÃO: reflexao)')
+                    type=borda, choices=Borda, default=Borda.reflexao_pula_um,
+                    help='muda o tratamento de borda para a opção dada (PADRÃO: reflexao_pula_um)')
 parser.add_argument('-t', '--transflin', dest='limitador', action='store_const',
                     const=transforma_limites, default=trunca,
                     help='transforma linearmente os resultados do filtro para 256 níveis (PADRÃO: trunca o resultado)')
