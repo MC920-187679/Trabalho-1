@@ -2,6 +2,8 @@ from argparse import ArgumentParser, ArgumentTypeError
 from tipos import Image, Kernel, Argumentos
 
 import numpy as np
+import sys
+
 from inout import imgread, imgwrite, imgshow
 from filtro import FILTRO
 from lib import (
@@ -104,7 +106,12 @@ if __name__ == "__main__":
     # saída
     if args.output:
         for output in args.output:
-            imgwrite(img, output)
+            try:
+                imgwrite(img, output)
+            # em caso de erro, mostra o erro
+            # mas continua a execução
+            except ValueError as err:
+                print(err, file=sys.stderr)
 
     if args.output is None or args.force_show:
         imgshow(img, arquivo)
