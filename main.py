@@ -1,74 +1,66 @@
-from argparse import ArgumentParser, FileType
-from typing import List, Dict, Tuple, Callable, Any
-import cv2
-from inout import leitura, escrita, mostrar, ordem_mosaico
-from tipos import Image
+from argparse import ArgumentParser
+from inout import imgread, imgwrite, imgshow
+from tipos import Image, Kernel
+from typing import Callable
+
 from lib import (
-    grayscale, negativo, espelhamento_vertical, converter_intervalo,
-    inverte_linhas_pares, reflexao_linhas, ajuste_brilho,
-    plano_de_bit, combinacao, mosaico
+    scipy_convolve, opencv_convolve,
+    combina, transforma_limites, trunca,
+    Borda, Backend, Limitador
 )
 
 
-Transform = Callable[..., Image]
-Arguments = List[Callable[[str], Any]]
+def convolucao(backend: Backend, img: Image, borda: Borda, limita: Limitador, antes: bool, *kernels: Kernel) -> Image:
+    resultado = []
+    for kernel in kernels:
+        res = backend(img, kernel, borda)
+        if antes:
+            res = limita(res).astype(float)
+        resultado.append(res)
 
-operation: Dict[str, Tuple[Transform, Arguments]] = {
-    'monocromatico':    (grayscale,             []),
-    'negativo':         (negativo,              []),
-    'esp.vertical':     (espelhamento_vertical, []),
-    'conv.intervalo':   (converter_intervalo,   []),
-    'inverte.pares':    (inverte_linhas_pares,  []),
-    'reflexao':         (reflexao_linhas,       []),
-    'aj.brilho':        (ajuste_brilho,         [float]),
-    'plano.bit':        (plano_de_bit,          [int]),
-    'combina':          (combinacao,            [cv2.imread, float]),
-    'mosaico':          (mosaico,               [ordem_mosaico])
-}
+    if len(kernels) < 2:
+        ...
 
-
-def aplica_ops(img: Image, ops: List[str]) -> Image:
-    """Aplica a sequência de operações na imagem."""
-
-    op = iter(ops)
-
-    for code in op:
-        # decide a operação
-        func, argp = operation[code]
-        # le e parseia os argumentos necessarios
-        args = [argty(next(op)) for argty in argp]
-        # aplica a operação com os argumentos
-        img = func(img, *args)
-
+    img = limita(combina(*resultado))
     return img
 
+
+def borda(nome: str) -> Borda:
+    return Borda[nome.upper()]
 
 # parser de argumentos
 description = 'Ferramenta de processamentos simples de imagem.'
 
 parser = ArgumentParser(description=description, allow_abbrev=False)
-parser.add_argument('input', type=FileType('rb'), metavar='INPUT',
+parser.add_argument('input', type=str, metavar='INPUT',
                     help='imagem de entrada')
+parser.add_argument('-a', '--antes', action='store_true')
+parser.add_argument('-b', '--borda', type=Borda.argtype, choices=Borda, default=Borda.reflexao)
+parser.add_argument('-t', '--transf', action='store_const', const=transforma_limites, default=trunca, dest='limitador')
+parser.add_argument('-s', '--scipy', action='store_const', const=scipy_convolve, default=scipy_convolve, dest='backend')
+parser.add_argument('-c', '--opencv', action='store_const', const=opencv_convolve, default=scipy_convolve, dest='backend')
 parser.add_argument('-f', '--force-show', action='store_true',
                     help='sempre mostra o resultado final em uma janela')
 parser.add_argument('-o', '--output', type=str, action='append', metavar='FILE',
                     help='arquivo para gravar o resultado')
-parser.add_argument('ops', type=str, metavar='OPERATION [ARGS...]', nargs='*',
+parser.add_argument('ops', type=str, metavar='OPERATION', nargs='+',
                     help='operações que devem ser feitas na imagem')
 
 if __name__ == "__main__":
     args = parser.parse_intermixed_args()
+    print(args)
 
-    # entrada
-    img, name = leitura(args.input)
+    # # entrada
+    # arquivo = args.input
+    # img = imgread(arquivo)
 
-    # operações
-    img = aplica_ops(img, args.ops)
+    # # operações
+    # # img = aplica_ops(img, args.ops)
 
-    # saída
-    if args.output:
-        for output in args.output:
-            escrita(img, output)
+    # # saída
+    # if args.output:
+    #     for output in args.output:
+    #         imgwrite(img, output)
 
-    if args.output is None or args.force_show:
-        mostrar(img, name)
+    # if args.output is None or args.force_show:
+    #     imgshow(img, arquivo)
