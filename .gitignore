@@ -12,5 +12,5 @@ __pycache__
 *-blx*
 *.bcf*
 *.synctex*
-_minted*/
+_*/
 relatorio/*.pdf

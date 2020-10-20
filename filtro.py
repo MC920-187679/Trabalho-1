@@ -1,9 +1,14 @@
+"""
+Definição dos filtros para o trabalho 1.
+"""
 from typing import Dict
 from tipos import Kernel
 
 import numpy as np
 
 
+# # # # # # # # # # # #
+# Filtros do trabalho #
 
 h1 = np.asarray([
     [ 0,  0, -1,  0,  0],
@@ -74,6 +79,10 @@ h11 = np.asarray([
 ])
 
 
+# # # # # # # # # #
+# Acesso por nome #
+
+# Dicinário para acesso dos filtros por nome.
 FILTRO: Dict[str, Kernel] = {
     f'h{i}': globals()[f'h{i}']
     for i in range(1, 11+1)
