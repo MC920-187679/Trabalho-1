@@ -149,7 +149,7 @@ def transforma_limites(array: np.ndarray) -> Image:
         Matriz representando uma imagem.
     """
     xmin, xmax = np.min(array), np.max(array)
-    y =  255 * (array / (xmax - xmin))
+    y =  255 * (array - xmin) / (xmax - xmin)
     return trunca(y)
 
 
