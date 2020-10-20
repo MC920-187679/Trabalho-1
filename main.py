@@ -89,8 +89,8 @@ parser.add_argument('-o', '--output', type=str, action='append', metavar='FILE',
 parser.add_argument('-f', '--force-show', action='store_true',
                     help='sempre mostra o resultado final em uma janela')
 # configurações da convolução
-parser.add_argument('-a', action='store_true', dest='antes',
-                    help='aplica a transformação dos níveis antes de combinar as imagens')
+parser.add_argument('-n', action='store_false', dest='antes',
+                    help='combina os resultados das convoluções sem transformação dos níveis antes')
 parser.add_argument('-b', '--borda',
                     type=borda, choices=Borda, default=Borda.reflexao_pula_ultimo,
                     help='muda o tratamento de borda para a opção dada (PADRÃO: reflexao_pula_ultimo)')
