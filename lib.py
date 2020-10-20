@@ -7,7 +7,7 @@ Todas as operações aqui fazem cópia da imagem para evitar
 alterar inesperadamente o buffer interno dos vetores.
 """
 from __future__ import annotations
-from typing import Optional, Tuple, List, Callable, TYPE_CHECKING
+from typing import Tuple, Callable, TYPE_CHECKING
 from enum import Enum, unique
 from tipos import Image, Kernel
 
@@ -58,14 +58,6 @@ class Borda(Opcoes, Enum):
     extensao = ('nearest', cv2.BORDER_REPLICATE)
     reflexao = ('reflect', cv2.BORDER_REFLECT)
     reflexaooo = ('mirror', cv2.BORDER_REFLECT_101)
-
-    # https://gist.github.com/ptmcg/23ba6e42d51711da44ba1216c53af4ea
-    @classmethod
-    def argtype(cls, opcao: str) -> Borda:
-        try:
-            return cls[opcao]
-        except KeyError:
-            ...
 
     def __str__(self) -> str:
         return self.name

@@ -3,7 +3,25 @@ Procolos para tipagem estática com ``mypy``.
 """
 from __future__ import annotations
 from numpy import ndarray, uint8, int64, float64
-from typing import Protocol, Type, Union, Literal, Optional, overload, Tuple
+from typing import (
+    TYPE_CHECKING,
+    Type, Protocol, Literal, overload,
+    Union, Optional, Tuple, List
+)
+
+if TYPE_CHECKING:
+    from lib import Borda, Backend, Limitador
+
+class Argumentos(Protocol):
+    input: str
+    antes: bool
+    backend: Backend
+    borda: Borda
+    force_show: bool
+    limitador: Limitador
+    output: Optional[List[str]]
+    kernels: List[Kernel]
+
 
 
 class Kernel(ndarray): # type: ignore

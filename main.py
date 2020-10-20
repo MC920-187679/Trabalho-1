@@ -1,6 +1,7 @@
-from argparse import ArgumentParser
+from argparse import ArgumentParser, ArgumentTypeError
 from inout import imgread, imgwrite, imgshow
-from tipos import Image, Kernel
+from tipos import Image, Kernel, Argumentos
+from filtro import FILTRO
 from typing import Callable
 
 from lib import (
@@ -10,32 +11,44 @@ from lib import (
 )
 
 
-def convolucao(backend: Backend, img: Image, borda: Borda, limita: Limitador, antes: bool, *kernels: Kernel) -> Image:
-    resultado = []
-    for kernel in kernels:
-        res = backend(img, kernel, borda)
-        if antes:
-            res = limita(res).astype(float)
-        resultado.append(res)
+def convolucao(img: Image, args: Argumentos) -> Image:
+    def aplica(kernel):
+        res = args.backend(img, kernel, args.borda)
 
-    if len(kernels) < 2:
-        ...
+        if args.antes:
+            res = args.limitador(res).astype(float)
 
-    img = limita(combina(*resultado))
+        return res
+
+    resultado = [aplica(kernel) for kernel in args.kernels]
+    img = args.limitador(combina(*resultado))
     return img
 
 
+def kernel(nome: str) -> Kernel:
+    try:
+        return FILTRO[nome]
+    except KeyError:
+        msg = f'kernel de convolução inválido: {nome}'
+        raise ArgumentTypeError(msg)
+
 def borda(nome: str) -> Borda:
-    return Borda[nome.upper()]
+    try:
+        return Borda[nome]
+    except KeyError:
+        msg = f'opção de tratamento de borda inválida: {nome}'
+        raise ArgumentTypeError(msg)
+
 
 # parser de argumentos
 description = 'Ferramenta de processamentos simples de imagem.'
 
 parser = ArgumentParser(description=description, allow_abbrev=False)
-parser.add_argument('input', type=str, metavar='INPUT',
+parser.add_argument('input', metavar='INPUT', type=str,
                     help='imagem de entrada')
 parser.add_argument('-a', '--antes', action='store_true')
-parser.add_argument('-b', '--borda', type=Borda.argtype, choices=Borda, default=Borda.reflexao)
+parser.add_argument('-b', '--borda', type=borda, choices=Borda, default=Borda.reflexao,
+                    help='muda o tratamento de borda para a opção dada')
 parser.add_argument('-t', '--transf', action='store_const', const=transforma_limites, default=trunca, dest='limitador')
 parser.add_argument('-s', '--scipy', action='store_const', const=scipy_convolve, default=scipy_convolve, dest='backend')
 parser.add_argument('-c', '--opencv', action='store_const', const=opencv_convolve, default=scipy_convolve, dest='backend')
@@ -43,24 +56,24 @@ parser.add_argument('-f', '--force-show', action='store_true',
                     help='sempre mostra o resultado final em uma janela')
 parser.add_argument('-o', '--output', type=str, action='append', metavar='FILE',
                     help='arquivo para gravar o resultado')
-parser.add_argument('ops', type=str, metavar='OPERATION', nargs='+',
+parser.add_argument('kernels', type=kernel, metavar='KERNEL', nargs='+',
                     help='operações que devem ser feitas na imagem')
 
 if __name__ == "__main__":
-    args = parser.parse_intermixed_args()
-    print(args)
+    args: Argumentos = parser.parse_intermixed_args()
+    # print(args)
 
-    # # entrada
-    # arquivo = args.input
-    # img = imgread(arquivo)
+    # entrada
+    arquivo = args.input
+    img = imgread(arquivo)
 
-    # # operações
-    # # img = aplica_ops(img, args.ops)
+    # operações
+    img = convolucao(img, args)
 
-    # # saída
-    # if args.output:
-    #     for output in args.output:
-    #         imgwrite(img, output)
+    # saída
+    if args.output:
+        for output in args.output:
+            imgwrite(img, output)
 
-    # if args.output is None or args.force_show:
-    #     imgshow(img, arquivo)
+    if args.output is None or args.force_show:
+        imgshow(img, arquivo)
