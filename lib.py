@@ -31,19 +31,20 @@ else:
 class Borda(Opcoes, Enum):
     """
     Opções de tratamento das bordas da imagem.
-    """
 
+    Variantes
+    ---------
+    extensao
+        Amplia a borda extendendo o último pixel.
+    reflexao
+        Amplia a borda refletindo os últimos pixels.
+    reflexao_pula_ultimo
+        Amplia a borda refletindo os últimos pixels,
+        mas sem o último pixel.
+    """
     extensao = ('nearest', cv2.BORDER_REPLICATE)
-    """Amplia a borda extendendo o último pixel."""
-
     reflexao = ('reflect', cv2.BORDER_REFLECT)
-    """Amplia a borda refletindo os últimos pixels."""
-
     reflexao_pula_ultimo = ('mirror', cv2.BORDER_REFLECT_101)
-    """
-    Amplia a borda refletindo os últimos pixels, mas
-    sem o último pixel.
-    """
 
     def __str__(self) -> str:
         """
