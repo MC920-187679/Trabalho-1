@@ -6,14 +6,13 @@ Nota
 Todas as operações aqui fazem cópia da imagem para evitar
 alterar inesperadamente o buffer interno dos vetores.
 """
-from __future__ import annotations
 from typing import Tuple, Callable, TYPE_CHECKING
 from enum import Enum, unique
 from tipos import Image, Kernel
 
-import cv2
 import numpy as np
 from scipy import ndimage
+import cv2
 
 
 # # # # # # # # # # # # #
