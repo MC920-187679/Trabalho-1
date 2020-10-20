@@ -12,19 +12,29 @@ from typing import (
 if TYPE_CHECKING:
     from lib import Borda, Backend, Limitador
 
+
 class Argumentos(Protocol):
+    """
+    Argumentos processados da linha de comando.
+    """
+    # argumentos necessários
     input: str
-    antes: bool
-    backend: Backend
-    borda: Borda
-    force_show: bool
-    limitador: Limitador
-    output: Optional[List[str]]
     kernels: List[Kernel]
+    # opções de saída
+    output: Optional[List[str]]
+    force_show: bool
+    # configurações da convolução
+    antes: bool
+    borda: Borda
+    limitador: Limitador
+    backend: Backend
 
 
 
 class Kernel(ndarray): # type: ignore
+    """
+    Matrizes que representam kernels de convolução.
+    """
     dtype: Union[Type[int64], Type[float64]]
     ndim: Literal[2] = 2
     shape: Tuple[int, int]
@@ -32,7 +42,7 @@ class Kernel(ndarray): # type: ignore
 
 class Image(ndarray): # type: ignore
     """
-    Matriz que representam imagens em OpenCV e bibliotecas similares.
+    Matrizes que representam imagens em OpenCV e bibliotecas similares.
     """
     dtype: Type[uint8] = uint8
     ndim: Literal[2] = 2
