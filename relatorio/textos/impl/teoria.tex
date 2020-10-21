@@ -1,0 +1,70 @@
+A correlação é uma operação em que os pesos são aplicados na ordem em que aparecem visualmente. Assim, considerando o produto Hadamard ($\bar{\cdot}$),  a correlação ($\circ$) de uma região $R$ da imagem por uma máscara $M$ (de dimensões $N \times N$) será \autocite{ref:corrconv}:
+
+\begin{equation*}
+    R \circ M = \sum_{i = 1}^N \sum_{j = 1}^N R_{i,j} M_{i,j} = \sum_{i = 1}^N \sum_{j = 1}^N \left(R \,\bar{\cdot}\, M\right)_{i,j}
+\end{equation*}
+
+Portanto, a implementação dessa etapa em NumPy poderia ser:
+
+\begin{minted}{python}
+    def correlacao_regiao(R: np.ndarray, M: np.ndarray) -> float:
+        return np.sum(R * M)
+\end{minted}
+
+Podemos ver isso mais visualmente com o seguinte exemplo de um filtro $3 \times 3$ em uma região genérica.
+
+\begin{equation*}
+    \begin{bmatrix}
+        a & b & c \\
+        d & e & f \\
+        g & h & k
+    \end{bmatrix} \circ \begin{bmatrix}
+        0 & 1 & 0 \\
+        2 & 3 & 1 \\
+        0 & 0 & 0
+    \end{bmatrix}
+    = b + 2d + 3e + f
+\end{equation*}
+
+Apesar disso, a problema pedia a implementação de uma convolução. Nesse processamento a ordem dos elementos de um dos sinais era percorrido de forma contrária, de modo que os sinais fossem combinados na mesma ordem em que aparecem visualmente. Podemos ver isso na \cref{fig:convolucao-sinal}, onde a reflexão do eixo em $g(-\tau)$ faz com que os primeiros pontos de $g(t)$ sejam combinados antes, isto é, $g(t=1)$ aparece antes de $g(t=4)$ na varredura apresentada nos três últimos gráficos.
+
+Com a mesma região $R$ e máscara $M$ acima, a convolução discreta resulta em \autocite{ref:corrconv}:
+
+\begin{equation*}
+    R \ast M = \sum_{i = 1}^N \sum_{j = 1}^N R_{i,j} M_{N-i,N-j} \ne R \circ M
+\end{equation*}
+
+Observando o exemplo matricial anterior, teremos o seguinte comportamento.
+
+\begin{equation} \label{eq:corrconv}
+    \begin{bmatrix}
+        a & b & c \\
+        d & e & f \\
+        g & h & k
+    \end{bmatrix} \ast \begin{bmatrix}
+        0 & 1 & 0 \\
+        2 & 3 & 1 \\
+        0 & 0 & 0
+    \end{bmatrix}
+    = d + 3e + 2f + h =
+    \begin{bmatrix}
+        a & b & c \\
+        d & e & f \\
+        g & h & k
+    \end{bmatrix} \circ \begin{bmatrix}
+        0 & 0 & 0 \\
+        1 & 3 & 2 \\
+        0 & 1 & 0
+    \end{bmatrix}
+\end{equation}
+
+A convolução é comumente usada devido a familiaridade das vastas propriedades dessa operação. Por outro lado, a correlação também aparece em vários processamentos de imagem devido à sua aproximação com a visualização de matrizes.
+
+\begin{figure}[H]
+    \centering
+    \def\svgwidth{12cm}
+    \input{figuras/convolucao-sinal.pdf_tex}
+
+    \caption{Exemplo visual da convolução em sinais unidimensionais contínuos.}
+    \label{fig:convolucao-sinal}
+\end{figure}

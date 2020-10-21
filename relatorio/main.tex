@@ -28,7 +28,7 @@
 \newcommand{\pyref}[2]{\href{#1}{\texttt{#2}}}
 
 \SetupFloatingEnvironment{listing}{name=Código}
-% \captionsetup[listing]{position=below,skip=-1pt}
+\captionsetup[listing]{position=below,skip=-1pt}
 
 \usepackage{csquotes}
 \usepackage[style=verbose-ibid,autocite=footnote,notetype=foot+end,backend=biber]{biblatex}
@@ -40,6 +40,10 @@
 \hypersetup{
     pdftitle  = {MC920 - Trabalho 1 - 187679},
     pdfauthor = {Tiago de Paula}
+}
+
+\newcommand{\textref}[2]{
+    \hyperref[#2]{#1 \ref*{#2}}
 }
 
 \usepackage{tikz}
