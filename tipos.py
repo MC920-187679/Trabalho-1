@@ -8,15 +8,32 @@ from typing import (
     Type, overload,
     Union, Optional, Tuple, List
 )
+from lib import Borda
 
 if TYPE_CHECKING:
-    from lib import Borda, Backend, Limitador
     # Python 3.8+
     from typing import Protocol, Literal
 else:
     # Python 3.7-
     Protocol = object
     Literal = Union
+
+
+class Backend(Protocol):
+    """
+    Tipo das funções de backend de convolução.
+    """
+    def __call__(self, input: Image, kernel: Kernel, borda: Borda) -> ndarray:
+        ...
+
+
+class Limitador(Protocol):
+    """
+    Tipos das função de transformação para imagem, que no
+    caso são: ``lib.trunca`` e ``lib.transforma_limites``.
+    """
+    def __call__(self, array: ndarray) -> Image:
+        ...
 
 
 class Argumentos(Protocol):

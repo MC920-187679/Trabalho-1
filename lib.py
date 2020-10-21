@@ -13,8 +13,8 @@ from enum import Enum, unique
 from sys import version_info
 if version_info.minor >= 7:
     from tipos import Image, Kernel
-else: # para 3.6
-    Image, Kernel = "Image", "Kernel"
+else:
+    Image, Kernel = 'Image', 'Kernel' # type: ignore
 
 import numpy as np
 from scipy import ndimage
@@ -48,6 +48,8 @@ class Borda(Opcoes, Enum):
         Amplia a borda refletindo os últimos pixels,
         mas sem o último pixel.
     """
+    # cada opção é composta pela sua configuração
+    # no SciPy e no OpenCV
     extensao = ('nearest', cv2.BORDER_REPLICATE)
     reflexao = ('reflect', cv2.BORDER_REFLECT)
     reflexao_pula_ultimo = ('mirror', cv2.BORDER_REFLECT_101)
@@ -61,9 +63,6 @@ class Borda(Opcoes, Enum):
 
 # # # # # # # # # # # # # #
 # Backends de convolução  #
-
-# tipo das funções de backend de convolução
-Backend = Callable[[Image, Kernel, Borda], np.ndarray]
 
 
 def scipy_convolve(input: Image, kernel: Kernel, borda: Borda=Borda.reflexao_pula_ultimo) -> np.ndarray:
@@ -134,10 +133,6 @@ def opencv_convolve(input: Image, kernel: Kernel, borda: Borda=Borda.reflexao_pu
 
 # # # # # # # # # # # # #
 # Operações auxiliares  #
-
-# tipos das função de transformação para imagem,
-# que no caso são: `trunca` e `transforma_limites`
-Limitador = Callable[[np.ndarray], Image]
 
 
 def transforma_limites(array: np.ndarray) -> Image:

@@ -12,9 +12,11 @@ if sys.version_info.major < 3 or sys.version_info.minor < 8:
 
 # anotações de tipo para 3.7+
 if sys.version_info.minor >= 7:
-    from tipos import Image, Kernel, Argumentos
+    from tipos import Image, Kernel, Argumentos, Backend, Limitador
 else: # para 3.6
-    Image, Kernel, Argumentos = "Image", "Kernel", "Argumentos"
+    Image, Kernel = 'Image', 'Kernel'           # type: ignore
+    Argumentos = 'Argumentos'                   # type: ignore
+    Backend, Limitador = 'Backend', 'Limitador' # type: ignore
 
 import numpy as np
 from argparse import ArgumentParser, ArgumentTypeError
@@ -22,9 +24,8 @@ from argparse import ArgumentParser, ArgumentTypeError
 from inout import imgread, imgwrite, imgshow
 from filtro import FILTRO
 from lib import (
-    scipy_convolve, opencv_convolve,
-    combina, transforma_limites, trunca,
-    Borda, Backend, Limitador
+    scipy_convolve, opencv_convolve, Borda,
+    combina, transforma_limites, trunca
 )
 
 

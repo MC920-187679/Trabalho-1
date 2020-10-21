@@ -9,7 +9,7 @@ from sys import version_info
 if version_info.minor >= 7:
     from tipos import Kernel
 else: # para 3.6
-    Kernel = "Kernel"
+    Kernel = 'Kernel' # type: ignore
 
 
 

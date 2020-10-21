@@ -9,7 +9,7 @@ from sys import version_info
 if version_info.minor >= 7:
     from tipos import Image
 else: # para 3.6
-    Image = "Image"
+    Image = 'Image' # type: ignore
 
 
 def imgread(arquivo: str) -> Image:
@@ -32,7 +32,7 @@ def imgread(arquivo: str) -> Image:
         buf = np.frombuffer(filebuf.read(), dtype=np.uint8)
 
     # só resta tratar problemas de decodificação
-    img = cv2.imdecode(buf, cv2.IMREAD_GRAYSCALE)
+    img: Image = cv2.imdecode(buf, cv2.IMREAD_GRAYSCALE)
     if img is None:
         msg = f'não foi possível parsear "{arquivo}" como imagem'
         raise ValueError(msg)
