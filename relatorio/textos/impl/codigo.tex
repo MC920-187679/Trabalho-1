@@ -1,0 +1,47 @@
+A convolução foi implementada em dois \textit{beckends} distintos, com as funções \pyline{convolve} do SciPy \autocite{ref:ndimage} e \pyline{filter2D} do OpenCV \autocite{ref:cvfilter}. A função dos SciPy realiza uma convolução, como definida matematicamente e foi implementada como no \textref{código}{code:scipy}, ignorando o tratamento das bordas.
+
+\begin{listing}[H]
+    \begin{minted}{python}
+        import numpy as np
+        from scipy import ndimage
+
+        def scipy_convolve(input: Image, kernel: Kernel, borda: ...) -> np.ndarray:
+            # mudança para float
+            input = input.astype(np.float64)
+            # convolução
+            output = ndimage.convolve(input, kernel, ...)
+            return output
+    \end{minted}
+
+    \caption{Convolução com o SciPy, sem o tratamento de bordas.}
+    \label{code:scipy}
+\end{listing}
+
+A biblioteca OpenCV não tem uma operação de convolução, considerando a definição formal. Assim, a função \pyline{cv2.filter2D} faz realmente uma correlação.
+
+Como podemos ver na \cref{eq:corrconv}, as duas operações são similares, bastando reverter a posição dos elementos de uma das matriz. A máscara normalmente é bem menor em relação à imagem, então ela que foi invertida. No caso do OpenCV, esse tipo de inversão das posições, de $(i, j)$ para $(N-i, N-j)$, pode ser feito pelo \pyline{cv2.flip} \autocite{ref:cvflip}, com o argumento \pyline{flipCode} negativo. A implementação da convolução, nesse caso, ficou como no \textref{código}{code:opencv}.
+
+\begin{listing}[H]
+    \begin{minted}{python}
+        import numpy as np
+        import cv2
+
+        def opencv_convolve(input: Image, kernel: Kernel, borda: ...) -> np.ndarray:
+            # flip do kernel para a correlação equivalente
+            kernel = cv2.flip(kernel, flipCode=-1)
+            # convolução
+            output = cv2.filter2D(input, cv2.CV_64F, kernel, ...)
+            return output
+    \end{minted}
+
+    \caption{Convolução com o OpenCV, sem o tratamento de bordas.}
+    \label{code:opencv}
+\end{listing}
+
+Para selecionar entre os \textit{backends}, existem dois argumentos opcionais. O \mintinline{bash}{--scipy} garante a execução com a biblioteca SciPy, por mais que já seja o padrão. Podemos então conseguir a mesma imagem da \cref{fig:execucao} com o comando:
+
+\begin{minted}{bash}
+    $ python3 main.py imagens/baboon.png h1 h2 --scipy
+\end{minted}
+
+O OpenCV pode ser escolhido com o argumento \mintinline{bash}{--opencv}, no entanto, não existem muitas diferenças no resultado.
