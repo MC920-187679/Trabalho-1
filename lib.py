@@ -64,7 +64,6 @@ class Borda(Opcoes, Enum):
 # # # # # # # # # # # # # #
 # Backends de convolução  #
 
-
 def scipy_convolve(input: Image, kernel: Kernel, borda: Borda=Borda.reflexao_pula_ultimo) -> np.ndarray:
     """
     Convolução de uma imagem com um kernel pelo SciPy.
@@ -133,7 +132,6 @@ def opencv_convolve(input: Image, kernel: Kernel, borda: Borda=Borda.reflexao_pu
 
 # # # # # # # # # # # # #
 # Operações auxiliares  #
-
 
 def transforma_limites(array: np.ndarray) -> Image:
     """
