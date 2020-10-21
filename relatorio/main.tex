@@ -1,4 +1,4 @@
-\documentclass[assignment = 0]{homework}
+\documentclass[assignment = 1]{homework}
 
 \usepackage{caption, subcaption, pdfpages, float}
 \usepackage{graphics, wrapfig, pgf, graphicx}
@@ -28,7 +28,7 @@
 \newcommand{\pyref}[2]{\href{#1}{\texttt{#2}}}
 
 \SetupFloatingEnvironment{listing}{name=Código}
-\captionsetup[listing]{position=below,skip=-1pt}
+% \captionsetup[listing]{position=below,skip=-1pt}
 
 \usepackage{csquotes}
 \usepackage[style=verbose-ibid,autocite=footnote,notetype=foot+end,backend=biber]{biblatex}
@@ -38,15 +38,41 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage[noabbrev, nameinlink, brazilian]{cleveref}
 \hypersetup{
-  pdftitle  = {MC920 - Trabalho 0},
-  pdfauthor = {Tiago de Paula}
+    pdftitle  = {MC920 - Trabalho 1 - 187679},
+    pdfauthor = {Tiago de Paula}
 }
+
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usetikzlibrary{positioning}
+
+\newenvironment{kmatrix}{
+    \begin{tikzpicture}[node distance=0cm]
+        \tikzset{square matrix/.style={
+                matrix of nodes,
+                column sep=-\pgflinewidth, row sep=-\pgflinewidth,
+                nodes={draw,
+                    minimum height=0.7cm,
+                    anchor=center,
+                    text width=0.7cm,
+                    align=center,
+                    inner sep=0pt
+                },
+            },
+            square matrix/.default=0.7cm
+        }
+}{
+    \end{tikzpicture}%
+}
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{\ensuremath{#2}}}%
+
 
 \begin{document}
 
     \pagestyle{main}
 
-    % \input{intro}
+    \input{textos/intro}
 
     % \input{impl}
 
