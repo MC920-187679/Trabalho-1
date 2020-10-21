@@ -121,6 +121,7 @@ parser.add_argument('--opencv', dest='backend', action='store_const',
 
 
 if __name__ == "__main__":
+    # argumentos fora de ordem no Python 3.7+
     if sys.version_info.minor >= 7:
         args = parser.parse_intermixed_args()
     else:
