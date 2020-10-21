@@ -5,12 +5,18 @@ from __future__ import annotations
 from numpy import ndarray, uint8, int64, float64
 from typing import (
     TYPE_CHECKING,
-    Type, Protocol, Literal, overload,
+    Type, overload,
     Union, Optional, Tuple, List
 )
 
 if TYPE_CHECKING:
     from lib import Borda, Backend, Limitador
+    # Python 3.8+
+    from typing import Protocol, Literal
+else:
+    # Python 3.7-
+    Protocol = object
+    Literal = Union
 
 
 class Argumentos(Protocol):

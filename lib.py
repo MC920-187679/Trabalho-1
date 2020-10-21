@@ -8,7 +8,13 @@ alterações inesperadas do buffer interno dos vetores.
 """
 from typing import Tuple, Callable, TYPE_CHECKING
 from enum import Enum, unique
-from tipos import Image, Kernel
+
+# anotações de tipo para 3.7+
+from sys import version_info
+if version_info.minor >= 7:
+    from tipos import Image, Kernel
+else: # para 3.6
+    Image, Kernel = "Image", "Kernel"
 
 import numpy as np
 from scipy import ndimage

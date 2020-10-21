@@ -1,9 +1,15 @@
 """
 Funções de IO com as imagens.
 """
-from tipos import Image
-import numpy as np
 import cv2
+import numpy as np
+
+# anotações de tipo para 3.7+
+from sys import version_info
+if version_info.minor >= 7:
+    from tipos import Image
+else: # para 3.6
+    Image = "Image"
 
 
 def imgread(arquivo: str) -> Image:

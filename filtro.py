@@ -1,10 +1,16 @@
 """
 Definição dos filtros para o trabalho 1.
 """
-from typing import Dict
-from tipos import Kernel
-
 import numpy as np
+from typing import Dict
+
+# anotações de tipo para 3.7+
+from sys import version_info
+if version_info.minor >= 7:
+    from tipos import Kernel
+else: # para 3.6
+    Kernel = "Kernel"
+
 
 
 # # # # # # # # # # # #

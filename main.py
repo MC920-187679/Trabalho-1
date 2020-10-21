@@ -1,8 +1,23 @@
-from argparse import ArgumentParser, ArgumentTypeError
-from tipos import Image, Kernel, Argumentos
+import sys
+if sys.version_info.major < 3 or sys.version_info.minor < 8:
+    msg = """
+
+    Essa ferramenta foi desenvolvida com Python 3.8 e funciona corretamente
+    nessa versão. Python 3.7 deveria funcionar corretamente também. Python
+    3.6 também funciona, mas com algumas funcionalidades limitadas.
+    Outras versões não funcionam por causa das f-strings.
+    """
+    import warnings
+    warnings.warn(msg)
+
+# anotações de tipo para 3.7+
+if sys.version_info.minor >= 7:
+    from tipos import Image, Kernel, Argumentos
+else: # para 3.6
+    Image, Kernel, Argumentos = "Image", "Kernel", "Argumentos"
 
 import numpy as np
-import sys
+from argparse import ArgumentParser, ArgumentTypeError
 
 from inout import imgread, imgwrite, imgshow
 from filtro import FILTRO
@@ -106,7 +121,10 @@ parser.add_argument('--opencv', dest='backend', action='store_const',
 
 
 if __name__ == "__main__":
-    args = parser.parse_intermixed_args()
+    if sys.version_info.minor >= 7:
+        args = parser.parse_intermixed_args()
+    else:
+        args = parser.parse_args()
 
     # entrada
     arquivo = args.input
