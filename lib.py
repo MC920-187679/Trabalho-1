@@ -11,7 +11,7 @@ from enum import Enum, unique
 
 # anotações de tipo para 3.7+
 from sys import version_info
-if version_info.minor >= 7:
+if version_info.minor >= 7 and TYPE_CHECKING:
     from tipos import Image, Kernel
 else:
     Image, Kernel = 'Image', 'Kernel' # type: ignore

@@ -23,7 +23,7 @@ class Backend(Protocol):
     """
     Tipo das funções de backend de convolução.
     """
-    def __call__(self, input: Image, kernel: Kernel, borda: Borda) -> ndarray:
+    def __call__(self, input: Image, kernel: Kernel, borda: Borda=Borda.reflexao_pula_ultimo) -> ndarray:
         ...
 
 
