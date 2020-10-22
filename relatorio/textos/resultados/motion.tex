@@ -3,7 +3,7 @@
 % https://www.wikiwand.com/en/Motion_blur
 % http://tech.abdulfatir.com/2014/05/kernel-image-processing.html
 
-+ Blur
+Além dos filtros de \textit{blur} apresentados na \hyperref[sec:blur]{seção anterior}, temos também um filtro de \textit{blur} direcionado, muitas vezes usado para alcançar um efeito de \textit{motion blur}. Para o \textit{kernel} da \cref{fig:h9}, o \textit{blur} está direcionado a 45\textdegree, como se a câmera estivesse se movendo da esquerda-superior para a direita-inferior.
 
 \begin{figure}[H]
     \centering
@@ -24,13 +24,16 @@
         \centering
         \includegraphics[width=0.9\textwidth]{resultados/city_h9.png}
         \caption{Convolução com $h_9$ (\ref{fig:h9}).}
-    \end{subfigure}\\[8pt]
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.9\textwidth]{resultados/city_h2.png}
-        \caption{\textit{Blur} gaussiano (\hyperref[sec:blur]{$h_2$}).}
+        \label{fig:motion:conv}
     \end{subfigure}
 
     \caption{Aplicação de \textit{motion blur}.}
-    % \label{fig:blur}
+    \label{fig:motion}
 \end{figure}
+
+Para a execução pelo programa, o comando deve ser no formato abaixo, resultando em algo como a \cref{fig:motion:conv}.
+
+\begin{minted}{bash}
+    $ python3 main.py imagens/city.png h9
+\end{minted}
+
