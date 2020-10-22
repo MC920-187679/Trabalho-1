@@ -1,0 +1,30 @@
+% https://northstar-www.dartmouth.edu/doc/idl/html_6.2/Sharpening_an_Image.html
+% http://www.dpi.inpe.br/spring/teoria/filtrage/filtragem.htm
+% https://www.wikiwand.com/en/Prewitt_operator
+
+Borda direcional, gradiente, Prewitt
+
+\begin{figure}[H]
+    \centering
+    \input{figuras/kernel/h11}
+
+    \caption{??: $h_{11}$.}
+    \label{fig:h11}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{imagens/butterfly.png}
+        \caption{Original: \texttt{butterfly.png}.}
+    \end{subfigure}%
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{resultados/butterfly_h11.png}
+        \caption{Convolução com $h_{11}$ (\ref{fig:h11}).}
+    \end{subfigure}
+
+    \caption{??}
+    % \label{fig:blur}
+\end{figure}
