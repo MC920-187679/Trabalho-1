@@ -12,27 +12,14 @@
 
     \begin{figure}[H]
         \centering
-        \def\svgwidth{4cm}
-        \import{figuras}{borda-extensao.pdf_tex}
+        \input{figuras/borda}
 
-        \caption{.}
-        \label{fig:borda-extensao}
+        \caption{Argumentos válidos para \mintinline{bash}{--borda} ou \mintinline{bash}{-b}.}
+        \label{fig:borda}
     \end{figure}
 
-    \begin{figure}[H]
-        \centering
-        \def\svgwidth{4cm}
-        \import{figuras}{borda-reflexao.pdf_tex}
+    Para que a convolução possa ser feita nas bordas da imagem, existem vários modos de tratamento. Na ferramenta foram implementadas três formas de tratamento de bordas, extensão do último pixel (\ref{fig:borda:extensao}), reflexão dos pixels de borda (\ref{fig:borda:reflexao}) e a mesma reflexão, mas sem repetir o pixel mais externo (\ref{fig:borda:reflexao-pulada}).
 
-        \caption{.}
-        \label{fig:borda-reflexao}
-    \end{figure}
+    A \textit{flag} \mintinline{bash}{--borda}, ou \mintinline{bash}{-b}, serve para controlar o tratamento de borda. As opções devem ser passadas como aparecem na \cref{fig:borda}. Por padrão, o tratamento é feito como na \cref{fig:borda:reflexao-pulada}, como se fosse a opção \mintinline{bash}{-b reflexao_pula_ultimo}. Ambos \textit{backends}, SciPy e OpenCV, funcionam com os três tipos de bordas.
 
-    \begin{figure}[H]
-        \centering
-        \def\svgwidth{4cm}
-        \import{figuras}{borda-reflexao-pulada.pdf_tex}
-
-        \caption{.}
-        \label{fig:borda-reflexao-pulada}
-    \end{figure}
+    Apesar de interessante, e em alguns casos importante, o três tratamentos de bordas não alteram muito no resultado da convolução. A razão disso é que os \textit{kernels} desse trabalho são relativamente pequenos.
