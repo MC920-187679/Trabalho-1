@@ -105,20 +105,20 @@ parser.add_argument('-o', '--output', type=str, action='append', metavar='FILE',
 parser.add_argument('-f', '--force-show', action='store_true',
                     help='sempre mostra o resultado final em uma janela')
 # configurações da convolução
-parser.add_argument('-n', action='store_false', dest='antes',
-                    help='combina os resultados das convoluções sem transformação dos níveis antes')
+parser.add_argument('--scipy', dest='backend', action='store_const',
+                    default=scipy_convolve, const=scipy_convolve,
+                    help='faz a concolução com a biblioteca SciPy (PADRÃO)')
+parser.add_argument('--opencv', dest='backend', action='store_const',
+                    default=scipy_convolve, const=opencv_convolve,
+                    help='faz a concolução com a biblioteca OpenCV')
 parser.add_argument('-b', '--borda',
                     type=borda, choices=Borda, default=Borda.reflexao_pula_ultimo,
                     help='muda o tratamento de borda para a opção dada (PADRÃO: reflexao_pula_ultimo)')
-parser.add_argument('-t', '--transflin', dest='limitador', action='store_const',
+parser.add_argument('-t', dest='limitador', action='store_const',
                     const=transforma_limites, default=trunca,
                     help='transforma linearmente os resultados do filtro para 256 níveis (PADRÃO: trunca o resultado)')
-parser.add_argument('--scipy', dest='backend', action='store_const',
-                    default=scipy_convolve, const=scipy_convolve,
-                    help='faz a concolução com a biblioteca OpenCV')
-parser.add_argument('--opencv', dest='backend', action='store_const',
-                    default=scipy_convolve, const=opencv_convolve,
-                    help='faz a concolução com a biblioteca SciPy (PADRÃO)')
+parser.add_argument('-n', action='store_false', dest='antes',
+                    help='combina os resultados das convoluções sem transformação dos níveis antes')
 
 
 if __name__ == "__main__":

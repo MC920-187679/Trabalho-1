@@ -47,10 +47,10 @@ class Argumentos(Protocol):
     output: Optional[List[str]]
     force_show: bool
     # configurações da convolução
-    antes: bool
+    backend: Backend
     borda: Borda
     limitador: Limitador
-    backend: Backend
+    antes: bool
 
 
 
