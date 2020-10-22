@@ -47,3 +47,5 @@ O primeiro deles é o filtro gaussiano $5 \times 5$ \autocite{ref:gaussian}, que
 \end{figure}
 
 O segundo filtro é chamada de \textit{box blur}, que faz uma média simples da vizinhaça 8 do pixel. Isso pode ser visto no \textit{kernel} do filtro (\cref{fig:h6}). Apesar de ser diferente do gaussiano, o resultado ficou bem parecido, como pode ser visto na \cref{fig:blur}. O motivo disso é que os pesos mais externos do filtro gaussiano $5 \times 5$ são bem baixos, fazendo com a região $3 \times 3$ seja mais presente, sendo essa a mesma região do filtro \textit{box}.
+
+No programa, esses filtros podem ser aplicados com \mintinline[breaklines]{bash}{python3 main.py imagens/house.png h2} ~ou~ \mintinline[breaklines]{bash}{python3 main.py imagens/house.png h6}.
