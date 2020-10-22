@@ -23,3 +23,19 @@
     A \textit{flag} \mintinline{bash}{--borda}, ou \mintinline{bash}{-b}, serve para controlar o tratamento de borda. As opções devem ser passadas como aparecem na \cref{fig:borda}. Por padrão, o tratamento é feito como na \cref{fig:borda:reflexao-pulada}, como se fosse a opção \mintinline{bash}{-b reflexao_pula_ultimo}. Ambos \textit{backends}, SciPy e OpenCV, funcionam com os três tipos de bordas.
 
     Apesar de interessante, e em alguns casos importante, o três tratamentos de bordas não alteram muito no resultado da convolução. A razão disso é que os \textit{kernels} desse trabalho são relativamente pequenos.
+
+\subsection{Discretização}
+
+    Toda o processo de convolução é feito com operações de ponto flutuante, buscando evitar \textit{overflow} e problemas de arredondamento. Então, para que a matriz volte a representar uma imagem, é preciso discretizar os valores, para os níveis 0 a 255.
+
+    A forma mais comum é arrendondando os valores para os inteiros mais próximos no intervalo $[0, 255]$. Dessa forma, os valores negativos se tornam 0 e valores maiores que 255 vão para 255. No código, esse método foi implementado na função \pyline{lib.trunca}. Essa é a opção padrão do programa.
+
+    Uma forma alternativa também foi implementada, baseada no mapeamento linear do menor valor da imagem para 0 e do maior para 255. Na ferramenta em Python, esse método de discretização está implementado na função \pyline{lib.transforma_limites} e pode ser selecionada com a opção \mintinline{bash}{-t} na linha de comando.
+
+\subsection{Combinação das Imagens}
+
+    Vários filtros podem ser passados como argumento, como no exemplo da \cref{sec:execucao}. Os filtros são aplicados, um por vez, na mesma imagem de entrada, discretizados e só então combinados em uma imagem final. A combinação é feita pela raiz da soma quadrática, em ponto flutuante, e discretizada novamente.
+
+    Para padronizar a implementação, a etapa de combinação é feita mesmo com apenas uma imagem. Por causa disso, a discretização é feita antes e depois da combinação, mantendo o resultado esperado da convolução. No entanto, isso pode ser alterado com a opção \mintinline{bash}{-n}, fazendo com a discretização seja aplicada apenas no final.
+
+    Para um filtro apenas, isso faz com que a convolução seja tratada pelo valor absoluto, fazendo as imagens ficarem com regiões mais claras, onde anteriormente seria preto.
