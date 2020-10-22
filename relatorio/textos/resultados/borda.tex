@@ -1,10 +1,31 @@
-% https://www.scss.tcd.ie/~munnellg/projects/edge_detection.html
-% https://northstar-www.dartmouth.edu/doc/idl/html_6.2/Sharpening_an_Image.html
-% https://homepages.inf.ed.ac.uk/rbf/HIPR2/log.htm
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{imagens/baboon.png}
+        \caption{Original: \texttt{baboon.png}.}
+    \end{subfigure}\\[8pt]
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{resultados/baboon_h1.png}
+        \caption{Convolução com $h_1$ (\ref{fig:h1}).}
+        \label{fig:borda:viz4}
+    \end{subfigure}%
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{resultados/baboon_h5.png}
+        \caption{Convolução com $h_5$ (\ref{fig:h5}).}
+        \label{fig:borda:viz8}
+    \end{subfigure}
 
-Edge detection, vizinhança 4 8, laplaciano
+    \caption{Aplicação do laplaciano discreto.}
+\end{figure}
 
-Realce não direcional % http://www.dpi.inpe.br/spring/teoria/filtrage/filtragem.htm
+Os filtros de detecção ou realce de borda mais comuns são os chamados não-direcionais. Normalmente, eles são desenvolvidos a partir do operador laplaciano discreto \autocite{ref:laplacian}.
+
+O operador laplaciano serve como uma medida de quanto uma função espacial no ponto $p$ é diferente da média dos pontos em um raio $[p - \delta r, p + \delta r]$. No caso discreto bidimensional, como imagens, existem duas principais medidas de distância, considerando a vizinhaças 4 e 8. Elas resultam em dois tipos de laplacianos diferentes, como pode ser visto na \cref{fig:borda:kernel}.
+
+Nesse trabalho temos o \textit{kernel} $h_1$ (\ref{fig:h1}), com vizinhaça 4 de raio 2, e o $h_5$, com vizinhaça 8 de raio 1. Os resultados podem ser vistos nas figuras \ref{fig:borda:viz4} e \ref{fig:borda:viz8}, respectivamente. Podemos ver que as bordas nas regiões de baixa frequência são bem detectadas, como no centro da imagem, mas regiões de alta frequência resultam em muita informação e podem acabar atrapalhando a análise das bordas. Uma forma de contorna esse problema é aplicando um filtro passa-baixas, como o \textit{blur} gaussiano, discutido na \cref{sec:blur}.
 
 \begin{figure}[H]
     \centering
@@ -21,26 +42,14 @@ Realce não direcional % http://www.dpi.inpe.br/spring/teoria/filtrage/filtragem
         \label{fig:h5}
     \end{subfigure}
 
-    \caption{??}
+    \caption{Filtros laplacianos discretos}
+    \label{fig:borda:kernel}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.9\textwidth]{imagens/baboon.png}
-        \caption{Original: \texttt{baboon.png}.}
-    \end{subfigure}\\[8pt]
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.9\textwidth]{resultados/baboon_h1.png}
-        \caption{Convolução com ??.}
-    \end{subfigure}%
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.9\textwidth]{resultados/baboon_h5.png}
-        \caption{Convolução com ??.}
-    \end{subfigure}
+A execução pode ser feita com:
 
-    \caption{??}
-\end{figure}
+\begin{minted}{bash}
+    $ python3 main.py imagens/baboon.png h1
+    # ou
+    $ python3 main.py imagens/baboon.png h5
+\end{minted}
