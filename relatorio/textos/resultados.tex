@@ -27,3 +27,27 @@
 \subsection{Nitidez (\texttt{h10})} \label{sec:sharpen}
 
     \input{textos/resultados/sharpen}
+
+\subsection{Argumentos Opcionais}
+
+    Na \cref{fig:opt} podemos ver o resultado da mesma operação da \cref{fig:borda:viz4}, que é o \hyperref[fig:h1]{filtro $h_1$} da \cref{sec:borda}, mas com os argumentos opcionais \mintinline{bash}{-t} (\cref{sec:impl:t}) e \mintinline{bash}{-n} (\cref{sec:impl:n}). Os resultados acabaram ficando mais difíceis de analisar, por isso as opções padrões foram utilizadas em todo o projeto.
+
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.48\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{resultados/baboon_h1t.png}
+            \caption{Argumento \mintinline{bash}{-t}.}
+            \label{fig:opt:t}
+        \end{subfigure}%
+        \begin{subfigure}{0.48\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{resultados/baboon_h1n.png}
+            \caption{Argumento \mintinline{bash}{-n}.}
+            \label{fig:opt:n}
+        \end{subfigure}
+
+        \caption{Resultados com os argumentos opcionais.}
+        \label{fig:opt}
+    \end{figure}
+

@@ -24,7 +24,7 @@
 
     Apesar de interessante, e em alguns casos importante, o três tratamentos de bordas não alteram muito no resultado da convolução. A razão disso é que os \textit{kernels} desse trabalho são relativamente pequenos.
 
-\subsection{Discretização}
+\subsection{Discretização} \label{sec:impl:t}
 
     Toda o processo de convolução é feito com operações de ponto flutuante, buscando evitar \textit{overflow} e problemas de arredondamento. Então, para que a matriz volte a representar uma imagem, é preciso discretizar os valores, para os níveis 0 a 255.
 
@@ -32,7 +32,7 @@
 
     Uma forma alternativa também foi implementada, baseada no mapeamento linear do menor valor da imagem para 0 e do maior para 255. Na ferramenta em Python, esse método de discretização está implementado na função \pyline{lib.transforma_limites} e pode ser selecionada com a opção \mintinline{bash}{-t} na linha de comando. Essa opção não foi muito utilizada neste relatório.
 
-\subsection{Combinação das Imagens}
+\subsection{Combinação das Imagens} \label{sec:impl:n}
 
     Vários filtros podem ser passados como argumento, como no exemplo da \cref{sec:execucao}. Os filtros são aplicados, um por vez, na mesma imagem de entrada, discretizados e só então combinados em uma imagem final. A combinação é feita pela raiz da soma quadrática, em ponto flutuante, e discretizada novamente.
 
