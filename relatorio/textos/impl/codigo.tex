@@ -1,4 +1,4 @@
-A convolução foi implementada em dois \textit{beckends} distintos, com as funções \pyline{convolve} do SciPy \autocite{ref:ndimage} e \pyline{filter2D} do OpenCV \autocite{ref:cvfilter}. A função dos SciPy realiza uma convolução, como definida matematicamente e foi implementada como no \textref{código}{code:scipy}, ignorando o tratamento das bordas.
+A convolução foi implementada em dois \textit{beckends} distintos, com as funções \pyline{convolve} do SciPy \autocite{ref:ndimage} e \pyline{filter2D} do OpenCV \autocite{ref:cvfilter}. A função do SciPy realiza uma convolução, como definida matematicamente, e foi implementada como no \textref{código}{code:scipy}, ignorando o tratamento das bordas.
 
 \begin{listing}[H]
     \begin{minted}{python}
@@ -17,7 +17,7 @@ A convolução foi implementada em dois \textit{beckends} distintos, com as fun�
     \label{code:scipy}
 \end{listing}
 
-A biblioteca OpenCV não tem uma operação de convolução, considerando a definição formal. Assim, a função \pyline{cv2.filter2D} faz realmente uma correlação.
+A biblioteca OpenCV não tem uma operação de convolução, considerando a definição formal. Assim, a função \pyline{cv2.filter2D} faz na realidade uma correlação.
 
 Como podemos ver na \cref{eq:corrconv}, as duas operações são similares, bastando reverter a posição dos elementos de uma das matriz. A máscara normalmente é bem menor em relação à imagem, então ela que foi invertida. No caso do OpenCV, esse tipo de inversão das posições, de $(i, j)$ para $(N-i, N-j)$, pode ser feito pelo \pyline{cv2.flip} \autocite{ref:cvflip}, com o argumento \pyline{flipCode} negativo. A implementação da convolução, nesse caso, ficou como no \textref{código}{code:opencv}.
 
@@ -49,3 +49,5 @@ Do mesmo modo, o OpenCV pode ser escolhido com o argumento \mintinline{bash}{--o
 \begin{minted}{bash}
     $ python3 main.py imagens/baboon.png h1 h2 --opencv
 \end{minted}
+
+Os dois \textit{backends} não apresentam diferenças significativas nos resultados.

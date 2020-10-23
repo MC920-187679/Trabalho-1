@@ -19,7 +19,7 @@ Os filtros mais simples de identificar foram os de \textit{blur}, que fazem um t
     \label{fig:blur:kernel}
 \end{figure}
 
-O primeiro deles é o filtro gaussiano $5 \times 5$ \autocite{ref:gaussian}, que pode ser visto na \cref{fig:h2}. Essa matriz é ponderada de acordo com as distâncias 4 do pixel central, reduzindo o peso para pixels mais distantes. No espaço das frequências, esse filtro funciona como um passa-baixas, reduzindo a influência de frequências muito altas, o que pode servir para melhorar o resultado de outros filtros, como o laplaciano, ou para evitar problemas de \textit{aliasing} \autocite{ref:gaussian-lowpass}. Na \cref{fig:blur:gauss}, podemos ver o resultado de aplicar esse fltro na image \texttt{house.png} (\ref{fig:blur:orig}).
+O primeiro deles é o filtro gaussiano $5 \times 5$ \autocite{ref:gaussian}, que pode ser visto na \cref{fig:h2}. Essa matriz é ponderada de acordo com as distâncias 4 do pixel central, reduzindo o peso para pixels mais distantes. No espaço das frequências, esse filtro funciona como um passa-baixas, reduzindo a influência de frequências muito altas, o que pode servir para melhorar o resultado de outros filtros, como o laplaciano, ou para evitar problemas de \textit{aliasing} \autocite{ref:gaussian-lowpass}. Na \cref{fig:blur:gauss}, podemos ver o resultado de aplicar esse filtro na imagem \texttt{house.png} (\ref{fig:blur:orig}).
 
 \begin{figure}[H]
     \centering
@@ -48,4 +48,8 @@ O primeiro deles é o filtro gaussiano $5 \times 5$ \autocite{ref:gaussian}, que
 
 O segundo filtro é chamada de \textit{box blur}, que faz uma média simples da vizinhaça 8 do pixel. Isso pode ser visto no \textit{kernel} do filtro (\cref{fig:h6}). Apesar de ser diferente do gaussiano, o resultado ficou bem parecido, como pode ser visto na \cref{fig:blur}. O motivo disso é que os pesos mais externos do filtro gaussiano $5 \times 5$ são bem baixos, fazendo com a região $3 \times 3$ seja mais presente, sendo essa a mesma região do filtro \textit{box}.
 
-No programa, esses filtros podem ser aplicados com \mintinline[breaklines]{bash}{python3 main.py imagens/house.png h2} ~ou~ \mintinline[breaklines]{bash}{python3 main.py imagens/house.png h6}.
+No programa, esses filtros podem ser aplicados com: \enlargethispage{20pt}
+
+\begin{minted}{bash}
+    $ python3 main.py imagens/house.png h2 # ou h6
+\end{minted}

@@ -7,9 +7,9 @@ Além das bibliotecas padrão de Python, foram utilizados os pacotes SciPy \auto
     O programa foi desenvolvido em Python 3.8, mas deveria funcionar com as versões 3.6 e 3.7 também. Além disso, o código fonte foi separado nos seguintes arquivos:
 
     \begin{description}
-        \item[main.py] É o corpo do programa, resposável por processar os comandos e opções da linha de comando.
+        \item[main.py] É o corpo do programa, resposável por processar os comandos e as opções da linha de comando.
 
-        \item[lib.py] Funções de tranformação da imagem, como ajuste de brilho e acesso do plano de bits.
+        \item[lib.py] Operações de convolução de imagens e operações auxiliares.
 
         \item[filtro.py] Definição das máscaras de convoluções (\textit{kernels}).
 
@@ -36,4 +36,4 @@ Além das bibliotecas padrão de Python, foram utilizados os pacotes SciPy \auto
         \label{fig:execucao}
     \end{figure}
 
-    Além das entradas posicionais, existem algums argumentos opicionais, que podem ser vistos com \mintinline{bash}{$ python3 main.py --help}. A mais importante das opções é \mintinline{text}{--output}, ou \mintinline{text}{-o}, que salva o resultado em um arquivo PNG em vez de exibir na tela. Se é desejável tanto a exibição da imagem quanto o salvamento no arquivo, o argumento \mintinline{text}{--force-show} ou \mintinline{text}{-f} pode ser usado. As outras opções são referentes ao \textit{kernel} de convolução e serão descritas na \cref{sec:resultado}.
+    Além das entradas posicionais, existem algums argumentos opicionais, que podem ser vistos com \mintinline{bash}{$ python3 main.py --help}. A mais importante das opções é \mintinline{text}{--output}, ou \mintinline{text}{-o}, que salva o resultado em um arquivo PNG em vez de exibir na tela. Se é desejável tanto a exibição da imagem quanto o salvamento no arquivo, o argumento \mintinline{text}{--force-show} ou \mintinline{text}{-f} pode ser usado. As outras opções são referentes ao \textit{kernel} de convolução e serão descritas nas seções \ref{sec:impl} e \ref{sec:resultado}.

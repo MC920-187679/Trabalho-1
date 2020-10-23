@@ -1,4 +1,4 @@
-Além dos detectores de borda não-direcionais, existem detectores que se importam com qual direção está sendo feita a análise. Muitos desses operadores são baseados na noção de gradiente, que representa matematicamente exatamente essa ideia.
+Além dos detectores de borda não-direcionais, existem detectores que se importam com qual direção está sendo feita a análise. Muitos desses operadores são baseados na noção de gradiente, que representa matematicamente o conceito de variação.
 
 Dentre eles, existe o operador de Sobel \autocite{ref:sobel}, que faz o gradiente nas direções $x$ e $y$ do plano cartesiano. Em específico, considerando a operação de convolução, o filtro $h_3$ (\ref{fig:h3}) aponta na direção $-x$ (para a esquerda) e o $h_4$ (\ref{fig:h4}), na $-y$ (para cima).
 
@@ -21,7 +21,7 @@ Dentre eles, existe o operador de Sobel \autocite{ref:sobel}, que faz o gradient
     \label{fig:sobel:kernel}
 \end{figure}
 
-Observando os resultados na \cref{fig:sobel}, podemos ver que quase não existe separação do corpo da borboleta com as asas na \cref{fig:sobel:y}, isso porque ela quase não apresenta variações verticais nessa região. Nessa mesma figura, no entanto, podemos ver claramente a separação do topo da asa, que não acontece na \cref{fig:sobel:x}, já que é uma região com pouca variaçao horizontal.
+Observando os resultados na \cref{fig:sobel}, podemos ver que quase não existe separação do corpo da borboleta com as asas na \cref{fig:sobel:y}, isso é porque ela quase não apresenta variações verticais nessa região. Nessa mesma figura, no entanto, podemos ver claramente a separação do topo da asa, que não acontece na \cref{fig:sobel:x}, já que é uma região com pouca variação horizontal.
 
 Além disso, podemos ver a presença do direcinamento $-x$ em vez do $+x$ na \ref{fig:sobel:x}. Em especial, na parte inferior da asa esquerda, logo abaixo do abdômen do inseto, é bem visível a borda do componente, o que não acontece na mesma região da asa direita. No tórax da borboleta também fica visível uma separação bilateral, que não é aparente na imagem original (\ref{fig:sobel:orig}).
 
@@ -58,7 +58,7 @@ Muitas vezes, os operadores de Sobel são combinados para extrair informações 
     \label{fig:sobel}
 \end{figure}
 
-A aplicação do operador de Sobel, sem direcinamento, pode ser feita no programa por:
+A aplicação do operador de Sobel, combinado nas duas direções, pode ser feita no programa por:
 
 \begin{minted}{bash}
     $ python3 main.py imagens/butterfly.png h3 h4
